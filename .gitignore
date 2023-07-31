@@ -145,5 +145,5 @@ dist
 
 ## Custom 
 *.csv
-.xlsx
+*.xlsx
 src/data/*
