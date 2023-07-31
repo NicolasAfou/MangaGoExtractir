@@ -20,6 +20,12 @@ This program is intended to extract from my read book list all the informations 
 ```
 4. navigate to {extractFolder}/scripts
 5. execute macInstall.sh (double click or run from prefered command line)
+    *Note: might need to change in the macInstall.sh the PROJECTPATH, default is 'PROJECT_PATH="/mangaGoExtractor"'*
+    ```sh
+    if [ $# -eq 0 ]; then
+        PROJECT_PATH="/mangaGoExtractor" # to replace if necessary
+    fi
+    ```
 6. program should start and a browser should open.
 7. ![Incorrect program](https://github.com/NicolasAfou/MangaGoExtractor/blob/master/Docs/NeedToRestart.png)
 8. If Captcha image is shown as in the image above, program will need to be restarted.
