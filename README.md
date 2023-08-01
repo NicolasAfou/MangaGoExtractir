@@ -30,6 +30,12 @@ This program is intended to extract from my read book list all the informations 
     *Execute with terminal on mac*
    Open the terminal application. Navigate to the extracted folder by typing the command "cd /User/blabla/mangaGoExtractor"
    Then type sudo scripts/./macInstall.sh
+   ```sh
+   cd /User/myfolderPosition/mangaGoExtractor/scripts
+   chmod +x macInstall.sh
+   ./macInstall.sh
+   ```
+   
 7. program should start and a browser should open.
 8. ![Incorrect program](https://github.com/NicolasAfou/MangaGoExtractor/blob/master/Docs/NeedToRestart.png)
 9. If Captcha image is shown as in the image above, program will need to be restarted(just click on Sign In, that will crash the program as we want it, then re-execute steps 5).
