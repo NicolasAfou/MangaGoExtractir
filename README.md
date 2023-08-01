@@ -29,7 +29,7 @@ This program is intended to extract from my read book list all the informations 
     ```
 6. program should start and a browser should open.
 7. ![Incorrect program](https://github.com/NicolasAfou/MangaGoExtractor/blob/master/Docs/NeedToRestart.png)
-8. If Captcha image is shown as in the image above, program will need to be restarted(just click on Sign In, without it will crash the program as we want it, then re-execute steps 5).
+8. If Captcha image is shown as in the image above, program will need to be restarted(just click on Sign In, that will crash the program as we want it, then re-execute steps 5).
 9. you will need to solve the captcha, and enter your username password if that was not done in the settings.json step.
 10. program will run, the manga.csv and manga.xlsx should now have been generated at the root of the extract folder.
 11. Something may have been gone wrong somewhere, in that case, contact IT Service.
