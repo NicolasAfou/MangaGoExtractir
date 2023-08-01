@@ -21,7 +21,7 @@ This program is intended to extract from my read book list all the informations 
 ```
 4. navigate to {extractFolder}/scripts
 5. execute macInstall.sh (double click or run from prefered command line)
-    *Note: might need to change in the macInstall.sh the PROJECTPATH, default is 'PROJECT_PATH="/mangaGoExtractor"'*
+    *Note: might need to change in the macInstall.sh the PROJECTPATH, default is 'PROJECT_PATH="/mangaGoExtractor and you might need to execute this file as admin"'*
     ```sh
     if [ $# -eq 0 ]; then
         PROJECT_PATH="/mangaGoExtractor" # to replace if necessary
