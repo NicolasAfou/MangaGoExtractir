@@ -21,7 +21,7 @@ cd "$PROJECT_PATH"
 npm install
 
 # Build the project
-# npm run build
+npm run build
 
 # Run the project
-#npm start
+npm start
