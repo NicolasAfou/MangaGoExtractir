@@ -6,6 +6,7 @@ export class MangaModel {
     title : string; //('div.content > div.manga > div.comment > h3 > a').value
     evaluation : string;
     intEvaluation : number;
+    status : string;
 
     constructor(values: Partial<MangaModel>){
         Object.assign(this,values);
@@ -13,6 +14,10 @@ export class MangaModel {
 
     public setIntEvaluation(){
         this.intEvaluation = Evaluation[this.evaluation];
+    }
+
+    public setStatus(value : string){
+        this.status = value;
     }
 
 }
