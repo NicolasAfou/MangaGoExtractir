@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer-extra";
-import { setTimeout } from "timers/promises";
 import { Page } from "puppeteer";
 import { MangaModel } from "./mangaModel";
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
@@ -24,6 +23,7 @@ export class PuppeteerHelper {
         const browser = await puppeteer.launch({headless:false});
         const page = await browser.newPage();
         page.setUserAgent(userAgent);
+        page.setDefaultNavigationTimeout(0);
     
         // Navigate the page to a URL
         await page.goto('https://www.mangago.me/home/accounts/login/?redir=https://www.mangago.me/',{waitUntil: 'networkidle0',});
@@ -37,26 +37,55 @@ export class PuppeteerHelper {
         await page.waitForNavigation();
         
         
-        //start extraction tasks
+        //start extraction tasks for read book
         let mangas : MangaModel[] = [];
         await page.goto(`https://www.mangago.me/home/people/${this.userId}/manga/3/?page=1`,{waitUntil: 'networkidle0',});
-        await this.GetListPerPage(page,mangas);
+        await this.GetListPerPage(page,mangas,"Read");
     
     
-        const numberOfPages = await page.evaluate('$("div.content > div.navigation > div.pagination")[0].attributes["total"].value') as number;
+        let numberOfPages = await page.evaluate('$("div.content > div.navigation > div.pagination")[0].attributes["total"].value') as number;
         console.log(numberOfPages);
         
         for (let index = 2; index <= numberOfPages; index++){
             await page.goto(`https://www.mangago.me/home/people/${this.userId}/manga/3/?page=${index}`,{waitUntil: 'networkidle0',});
-            await this.GetListPerPage(page,mangas);
+            await this.GetListPerPage(page,mangas,"Read");
         }
+
+        //start extraction tasks for want book
+        await page.goto(`https://www.mangago.me/home/people/${this.userId}/manga/1/?page=1`,{waitUntil: 'networkidle0',});
+        await this.GetListPerPage(page,mangas,"Want");
+    
+    
+        numberOfPages = await page.evaluate('$("div.content > div.navigation > div.pagination")[0].attributes["total"].value') as number;
+        console.log(numberOfPages);
+        
+        for (let index = 2; index <= numberOfPages; index++){
+            await page.goto(`https://www.mangago.me/home/people/${this.userId}/manga/1/?page=${index}`,{waitUntil: 'networkidle0',});
+            await this.GetListPerPage(page,mangas,"Want");
+        }
+
+
+        //start extraction tasks for Reading book
+        await page.goto(`https://www.mangago.me/home/people/${this.userId}/manga/2/?page=1`,{waitUntil: 'networkidle0',});
+        await this.GetListPerPage(page,mangas,"Reading");
+    
+    
+        numberOfPages = await page.evaluate('$("div.content > div.navigation > div.pagination")[0].attributes["total"].value') as number;
+        console.log(numberOfPages);
+        
+        for (let index = 2; index <= numberOfPages; index++){
+            await page.goto(`https://www.mangago.me/home/people/${this.userId}/manga/2/?page=${index}`,{waitUntil: 'networkidle0',});
+            await this.GetListPerPage(page,mangas,"Reading");
+        }
+
+
         
         await browser.close();
 
         return mangas;
     };
     
-    private async GetListPerPage(page: Page, mangaList: MangaModel[]){
+    private async GetListPerPage(page: Page, mangaList: MangaModel[], status : string){
         let mangaData = await page.evaluate(selector => {
             
             //private function to extract id from url
@@ -84,7 +113,11 @@ export class PuppeteerHelper {
             });
     
         },'div.content > div.manga > div.comment');
-        mangaData.map(manga => mangaList.push(new MangaModel(manga)));
+        mangaData.map(manga => {
+            let cmanga = new MangaModel(manga);
+            cmanga.status = status;
+            mangaList.push(cmanga); 
+        });
     }
     
 }
